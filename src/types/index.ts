@@ -37,10 +37,10 @@ export interface GetDogMatchResponse {
 }
 
 export interface DogFilters {
-  breeds: string[];
-  zipCodes: string[];
-  ageMin: number;
-  ageMax: number;
+  breeds?: string[];
+  zipCodes?: string[];
+  ageMin?: number;
+  ageMax?: number;
 }
 
 export interface DogSortOptions {
