@@ -7,7 +7,7 @@ import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/shallow';
 import Pagination from '../Pagination';
 import { useState } from 'react';
-import { PAGESIZE } from '@/api/lib/constants';
+import { PAGESIZE } from '@/lib/constants';
 import { DogFilters, DogSortOption } from '@/types';
 
 const size = PAGESIZE;
@@ -19,7 +19,7 @@ export default function SearchResultsList({
   filters: DogFilters;
   sortOption: DogSortOption;
 }) {
-  const router = useRouter();
+  const { push } = useRouter();
   const [page, setPage] = useState(0);
 
   const { favorites, addFavorite, removeFavorite } = useDogStore(
@@ -39,10 +39,10 @@ export default function SearchResultsList({
     queryFn: () =>
       getDogIDs(page, size, filters, sortOption).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          router?.push('/login'); // Redirect to login if unauthorized
+          push('/login');
         }
 
-        throw new Error('Failed to fetch results. Please try again later.');
+        throw new Error('Failed to fetch getDogIDs. Please try again later.');
       }),
     queryKey: ['dogIds', page, filters, sortOption]
   });
@@ -55,7 +55,14 @@ export default function SearchResultsList({
     isError: isDogsError,
     error: dogsError
   } = useQuery({
-    queryFn: () => getDogs(dogIdsList),
+    queryFn: () =>
+      getDogs(dogIdsList).catch((error) => {
+        if (error instanceof Error && error.message === 'Unauthorized') {
+          push('/login');
+        }
+
+        throw new Error('Failed to getDogs. Please try again later.');
+      }),
     queryKey: ['dogs', ...dogIdsList],
     enabled: !!dogIds?.resultIds
   });
@@ -80,6 +87,7 @@ export default function SearchResultsList({
     );
   }
   // TODO: semantic html li ul etc..
+  // TODO: add optimistic updates
   return (
     <>
       {dogs?.map((dog) => (
