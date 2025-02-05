@@ -35,3 +35,15 @@ export interface GetDogIdsResponse {
 export interface GetDogMatchResponse {
   match: Dog['id'];
 }
+
+export interface DogFilters {
+  breeds: string[];
+  zipCodes: string[];
+  ageMin: number;
+  ageMax: number;
+}
+
+export interface DogSortOptions {
+  field: 'breed' | 'name' | 'age';
+  order: 'asc' | 'desc';
+}
