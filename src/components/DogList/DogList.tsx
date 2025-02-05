@@ -25,10 +25,10 @@ export default function DogList() {
         <DogListFilters
           onChange={(newFilters) =>
             setFilters({
-              breeds: newFilters?.breeds || undefined,
-              zipCodes: newFilters?.zipCodes || undefined,
-              ageMin: newFilters?.ageMin || undefined,
-              ageMax: newFilters?.ageMax || undefined
+              breeds: newFilters?.breeds,
+              zipCodes: newFilters?.zipCodes,
+              ageMin: newFilters?.ageMin,
+              ageMax: newFilters?.ageMax
             })
           }
         />

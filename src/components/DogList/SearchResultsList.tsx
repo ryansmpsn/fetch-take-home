@@ -5,13 +5,20 @@ import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/shallow';
-import Pagination from './Pagination';
+import Pagination from '../Pagination';
 import { useState } from 'react';
 import { PAGESIZE } from '@/api/lib/constants';
+import { DogFilters, DogSortOption } from '@/types';
 
 const size = PAGESIZE;
 
-export default function SearchResultsList() {
+export default function SearchResultsList({
+  filters,
+  sortOption
+}: {
+  filters: DogFilters;
+  sortOption: DogSortOption;
+}) {
   const router = useRouter();
   const [page, setPage] = useState(0);
 
@@ -30,14 +37,14 @@ export default function SearchResultsList() {
     isError: isDogIDsError
   } = useQuery({
     queryFn: () =>
-      getDogIDs(page, size).catch((error) => {
+      getDogIDs(page, size, filters, sortOption).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
           router?.push('/login'); // Redirect to login if unauthorized
         }
 
         throw new Error('Failed to fetch results. Please try again later.');
       }),
-    queryKey: ['dogIds', page]
+    queryKey: ['dogIds', page, filters, sortOption]
   });
 
   const dogIdsList = dogIds?.resultIds || [];
@@ -87,7 +94,7 @@ export default function SearchResultsList() {
             borderRadius: '4px'
           }}
         >
-          {dog.name}
+          {dog.name} - {dog.breed} - {dog.age}
         </p>
       ))}
 
