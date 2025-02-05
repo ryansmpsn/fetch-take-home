@@ -11,14 +11,18 @@ import { useShallow } from 'zustand/shallow';
 
 export default function FavoritesPage() {
   const [openModal, setOpenModal] = useState(false);
+
   useLockBodyScroll(openModal);
 
-  const { favorites, removeFavorite } = useDogStore(
-    useShallow((state) => ({
-      favorites: state.favorites,
-      removeFavorite: state.removeFavorite
-    }))
-  );
+  const { favorites, removedFavorites, undoRemove, removeFavorite } =
+    useDogStore(
+      useShallow((state) => ({
+        favorites: state.favorites,
+        removedFavorites: state.removedFavorites,
+        undoRemove: state.undoRemove,
+        removeFavorite: state.removeFavorite
+      }))
+    );
 
   const {
     data: dogs,
@@ -46,6 +50,9 @@ export default function FavoritesPage() {
         <h2>
           You have {favorites.length} Favorite{favorites.length ? 's' : ''}
         </h2>
+        {removedFavorites.length && (
+          <button onClick={undoRemove}>undo remove</button>
+        )}
         {dogs?.map((dog) => (
           <p
             key={dog.id}
