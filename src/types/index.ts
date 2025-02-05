@@ -43,7 +43,7 @@ export interface DogFilters {
   ageMax?: number;
 }
 
-export interface DogSortOptions {
+export interface DogSortOption {
   field: 'breed' | 'name' | 'age';
   order: 'asc' | 'desc';
 }
