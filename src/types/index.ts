@@ -31,3 +31,7 @@ export interface GetDogIdsResponse {
   resultIds: Dog['id'][];
   total: number;
 }
+
+export interface GetDogMatchResponse {
+  match: Dog['id'];
+}
