@@ -6,6 +6,7 @@ import useLockBodyScroll from '@/hooks/useLockBodyScroll';
 import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import { useShallow } from 'zustand/shallow';
 
@@ -13,6 +14,7 @@ export default function FavoritesPage() {
   const [openModal, setOpenModal] = useState(false);
 
   useLockBodyScroll(openModal);
+  const { push } = useRouter();
 
   const { favorites, removedFavorites, undoRemove, removeFavorite } =
     useDogStore(
@@ -30,7 +32,14 @@ export default function FavoritesPage() {
     isError,
     error
   } = useQuery({
-    queryFn: () => getDogs(favorites),
+    queryFn: () =>
+      getDogs(favorites).catch((error) => {
+        if (error instanceof Error && error.message === 'Unauthorized') {
+          push('/login');
+        }
+
+        throw new Error('Failed to getDogs. Please try again later.');
+      }),
     queryKey: ['dogs', ...favorites],
     enabled: !!favorites
   });

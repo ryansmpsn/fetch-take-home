@@ -10,6 +10,7 @@ import { getDogMatch, getDogs } from '@/api/dog';
 import { useDogStore } from '@/store/DogStore';
 import { useShallow } from 'zustand/shallow';
 import { useQuery } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
 
 const Backdrop = styled.div`
   position: absolute;
@@ -64,6 +65,8 @@ export type ModalType = {
 function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
   const containerRef = useRef<HTMLDialogElement>(null);
 
+  const { push } = useRouter();
+
   useOutsideClick(containerRef, setClose);
 
   const mainContainer = document.querySelector('#main');
@@ -80,7 +83,14 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
     isError: isMatchIdError,
     error: matchIdError
   } = useQuery({
-    queryFn: () => getDogMatch(favorites),
+    queryFn: () =>
+      getDogMatch(favorites).catch((error) => {
+        if (error instanceof Error && error.message === 'Unauthorized') {
+          push('/login');
+        }
+
+        throw new Error('Failed to getDogMatch. Please try again later.');
+      }),
     queryKey: ['dog', 'match', ...favorites],
     enabled: !!favorites
   });
@@ -93,11 +103,17 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
     isError: isMatchError,
     error: matchError
   } = useQuery({
-    queryFn: () => getDogs([matchId]),
+    queryFn: () =>
+      getDogs([matchId]).catch((error) => {
+        if (error instanceof Error && error.message === 'Unauthorized') {
+          push('/login');
+        }
+
+        throw new Error('Failed to getDogs. Please try again later.');
+      }),
     queryKey: ['dogs', matchId],
     enabled: !!matchId
   });
-  console.log('🚀 ~ dogMatch:', dogMatch);
 
   if (isMatchIdLoading || isMatchLoading) {
     return <div>Loading dogs...</div>;

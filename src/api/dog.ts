@@ -52,11 +52,11 @@ export const getDogs = async (dogIds: string[]): Promise<Dog[] | undefined> => {
 };
 
 export const getDogMatch = async (
-  dogIds: string[]
+  favoritesDogIds: string[]
 ): Promise<GetDogMatchResponse | undefined> => {
   const data = await fetcher('/dogs/match', {
     method: 'POST',
-    body: JSON.stringify(dogIds)
+    body: JSON.stringify(favoritesDogIds)
   });
 
   return data as GetDogMatchResponse;
