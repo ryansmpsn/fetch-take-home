@@ -61,9 +61,11 @@ export default function DogListFilters({ onChange }: DogListFiltersProps) {
   });
 
   useEffect(() => {
-    const uniqueZipCodes = Array.from(
-      new Set(locations?.results.map((location) => location.zip_code))
-    );
+    const uniqueZipCodes = city
+      ? Array.from(
+          new Set(locations?.results.map((location) => location.zip_code))
+        )
+      : undefined;
 
     onChange({
       breeds: debouncedFilteredBreeds?.length
@@ -73,12 +75,7 @@ export default function DogListFilters({ onChange }: DogListFiltersProps) {
       ageMax: debouncedAgeMax,
       zipCodes: uniqueZipCodes ? uniqueZipCodes : undefined
     });
-  }, [
-    debouncedFilteredBreeds,
-    debouncedAgeMin,
-    debouncedAgeMax,
-    locations?.results
-  ]);
+  }, [debouncedFilteredBreeds, debouncedAgeMin, debouncedAgeMax, locations]);
 
   const handleBreedChange = (
     newValue: MultiValue<{ value: string; label: string }>
@@ -124,7 +121,7 @@ export default function DogListFilters({ onChange }: DogListFiltersProps) {
             setAgeMax(e.target.value ? parseInt(e.target.value) : undefined)
           }
         />
-
+        <h1>search for dogs in your city!</h1>
         <Select
           options={STATES?.map((state) => ({
             value: state.abbreviation,
