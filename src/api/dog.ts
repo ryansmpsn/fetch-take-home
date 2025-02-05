@@ -1,8 +1,11 @@
 import { fetcher } from './ApiClient';
 import { Dog, GetDogIdsResponse, GetDogMatchResponse } from '@/types';
 
-export const getDogIDs = async (): Promise<GetDogIdsResponse | undefined> => {
-  const data = await fetcher('/dogs/search', {
+export const getDogIDs = async (
+  page: number,
+  size: number
+): Promise<GetDogIdsResponse | undefined> => {
+  const data = await fetcher(`/dogs/search?size=${size}&from=${page * size}`, {
     method: 'GET'
   });
 
