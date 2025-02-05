@@ -41,7 +41,7 @@ export default function LoginForm() {
       await login(payload);
     },
     onSuccess: () => {
-      push('/search');
+      push('/');
     },
     onError: (error: Error) => {
       console.error('Login error:', error);
