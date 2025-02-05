@@ -1,5 +1,5 @@
 import { fetcher } from './ApiClient';
-import { Dog, GetDogIdsResponse } from '@/types';
+import { Dog, GetDogIdsResponse, GetDogMatchResponse } from '@/types';
 
 export const getDogIDs = async (): Promise<GetDogIdsResponse | undefined> => {
   const data = await fetcher('/dogs/search', {
@@ -20,11 +20,11 @@ export const getDogs = async (dogIds: string[]): Promise<Dog[] | undefined> => {
 
 export const getDogMatch = async (
   dogIds: string[]
-): Promise<Dog | undefined> => {
+): Promise<GetDogMatchResponse | undefined> => {
   const data = await fetcher('/dogs/match', {
     method: 'POST',
     body: JSON.stringify(dogIds)
   });
 
-  return data as Dog;
+  return data as GetDogMatchResponse;
 };
