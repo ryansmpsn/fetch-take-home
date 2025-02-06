@@ -6,13 +6,10 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/shallow';
 import Pagination from './Pagination';
-import { useState } from 'react';
 import { MAX_FAVORITES, PAGESIZE } from '@/lib/constants';
 import { DogFilters, DogSortOption } from '@/types';
 import DogCard from './DogCard';
 import styled from 'styled-components';
-
-const size = PAGESIZE;
 
 const DogGrid = styled.div`
   display: grid;
@@ -21,15 +18,20 @@ const DogGrid = styled.div`
   gap: 1.25rem;
 `;
 
-export default function SearchResultsList({
-  filters,
-  sortOption
-}: {
+type SearchResultsListProps = {
+  page: number;
+  setPage: (page: number) => void;
   filters: DogFilters;
   sortOption: DogSortOption;
-}) {
+};
+
+export default function SearchResultsList({
+  page,
+  setPage,
+  filters,
+  sortOption
+}: SearchResultsListProps) {
   const { push } = useRouter();
-  const [page, setPage] = useState(0);
 
   const { favorites, addFavorite, removeFavorite } = useDogStore(
     useShallow((state) => ({
@@ -46,7 +48,7 @@ export default function SearchResultsList({
     isError: isDogIDsError
   } = useQuery({
     queryFn: () =>
-      getDogIDs(page, size, filters, sortOption).catch((error) => {
+      getDogIDs(page, PAGESIZE, filters, sortOption).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
           push('/');
         }
@@ -112,14 +114,7 @@ export default function SearchResultsList({
           />
         ))}
       </DogGrid>
-
-      <Pagination
-        page={page}
-        setPage={setPage}
-        dogIdsList={dogIdsList}
-        size={size}
-        total={dogIds?.total || 0}
-      />
+      {dogIds && <Pagination page={page} setPage={setPage} dogIds={dogIds} />}
     </>
   );
 }

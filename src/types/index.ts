@@ -27,6 +27,7 @@ export interface LoginFormBody {
 }
 
 export interface GetDogIdsResponse {
+  prev: string;
   next: string;
   resultIds: Dog['id'][];
   total: number;

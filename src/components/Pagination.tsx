@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import Button from './Button';
+import { GetDogIdsResponse } from '@/types';
+import { PAGESIZE } from '@/lib/constants';
 
 const PaginationContainer = styled.div`
   display: flex;
@@ -12,33 +14,21 @@ const PaginationContainer = styled.div`
 type PaginationProps = {
   page: number;
   setPage: (page: number) => void;
-  dogIdsList: string[];
-  size: number;
-  total: number;
+  dogIds: GetDogIdsResponse;
 };
 
-export default function Pagination({
-  page,
-  setPage,
-  dogIdsList,
-  size,
-  total
-}: PaginationProps) {
+export default function Pagination({ page, setPage, dogIds }: PaginationProps) {
+  const { next, prev, total } = dogIds;
+
   return (
     <PaginationContainer>
-      <Button
-        onClick={() => setPage(Math.max(page - 1, 0))}
-        disabled={page === 0}
-      >
+      <Button onClick={() => setPage(Math.max(page - 1, 0))} disabled={!prev}>
         Previous
       </Button>
       <span>
-        {page + 1} of {Math.ceil(total / size)}
+        {page + 1} of {Math.ceil(total / PAGESIZE)}
       </span>
-      <Button
-        onClick={() => setPage(page + 1)}
-        disabled={dogIdsList.length < size}
-      >
+      <Button onClick={() => setPage(page + 1)} disabled={!next}>
         Next
       </Button>
     </PaginationContainer>

@@ -41,6 +41,8 @@ const SearchContainer = styled.div`
 const SearchResults = styled.div``;
 
 export default function SearchPage() {
+  const [page, setPage] = useState(0);
+
   const [filters, setFilters] = useState<DogFilters>({
     breeds: undefined,
     zipCodes: undefined,
@@ -64,20 +66,21 @@ export default function SearchPage() {
       <Title>Search</Title>
       <Description>
         Select {MAX_FAVORITES} dogs to match with. You can filter by breed, age,
-        and location. Then go to the Favorites page to generate your match.
+        and city. Then go to the Favorites page to generate your match.
       </Description>
 
       <SearchContainer>
         <div>
           <DogSearchFilters
-            onChange={(newFilters) =>
+            onChange={(newFilters: DogFilters) => {
               setFilters({
                 breeds: newFilters?.breeds,
                 zipCodes: newFilters?.zipCodes,
                 ageMin: newFilters?.ageMin,
                 ageMax: newFilters?.ageMax
-              })
-            }
+              });
+              setPage(0);
+            }}
           />
           <DogSortOptions
             onChange={(newSortOption: DogSortOption) =>
@@ -94,7 +97,12 @@ export default function SearchPage() {
             {favorites.length} / {MAX_FAVORITES} selected
           </Count>
 
-          <SearchResultsList filters={filters} sortOption={sortOption} />
+          <SearchResultsList
+            page={page}
+            setPage={setPage}
+            filters={filters}
+            sortOption={sortOption}
+          />
         </SearchResults>
       </SearchContainer>
     </Container>

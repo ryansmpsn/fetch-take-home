@@ -52,9 +52,9 @@ export default function DogSortOptions({ onChange }: DogSortOptionsProps) {
   const debouncedSort = useDebounce(sortOption);
   const isMounted = useIsMounted();
 
-  // TODO: Implement sorting
   useEffect(() => {
     onChange({ field: debouncedSort.field, order: debouncedSort.order });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [debouncedSort]);
 
   return (

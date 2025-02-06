@@ -50,7 +50,6 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
   );
   const [ageMin, setAgeMin] = useState<number | undefined>(undefined);
   const [ageMax, setAgeMax] = useState<number | undefined>(undefined);
-  console.log('🚀 ~ DogSearchFilters ~ ageMax:', ageMax);
   const [city, setCity] = useState<string | undefined>(undefined);
   const [states, setStates] = useState<string[] | undefined>(undefined);
   const debouncedFilteredBreeds = useDebounce(filteredBreeds);
@@ -61,7 +60,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
   const { push } = useRouter();
   const isMounted = useIsMounted();
 
-  const { data: breeds } = useQuery({
+  const { data: breeds, isLoading: isLoadingBreeds } = useQuery({
     queryFn: () =>
       getBreeds().catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
@@ -73,7 +72,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
     queryKey: ['breeds']
   });
 
-  const { data: locations } = useQuery({
+  const { data: locations, isLoading: isLoadingLocations } = useQuery({
     queryKey: ['locations', debouncedCity, debouncedStates],
     queryFn: () =>
       SearchLocations({
@@ -105,7 +104,13 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
       ageMax: debouncedAgeMax,
       zipCodes: uniqueZipCodes ? uniqueZipCodes : undefined
     });
-  }, [debouncedFilteredBreeds, debouncedAgeMin, debouncedAgeMax, locations]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    debouncedFilteredBreeds,
+    debouncedAgeMin,
+    debouncedAgeMax,
+    debouncedCity
+  ]);
 
   const handleBreedChange = (
     newValue: MultiValue<{ value: string; label: string }>
@@ -133,6 +138,8 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
             isMulti
             onChange={handleBreedChange}
             placeholder="Select breeds..."
+            isClearable
+            isLoading={isLoadingBreeds}
           />
         </InputGroup>
 
@@ -186,6 +193,8 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
               }))}
               onChange={handleStateChange}
               placeholder="Select States..."
+              isLoading={isLoadingLocations}
+              isClearable
             />
           </InputGroup>
           <InputGroup>
@@ -199,6 +208,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
               value={city ? { value: city, label: city } : null}
               placeholder="Select a City..."
               isClearable
+              isLoading={isLoadingLocations}
             />
           </InputGroup>
         </InputRow>
