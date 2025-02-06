@@ -1,6 +1,6 @@
 'use client';
 
-import { getDogs } from '@/api/dog';
+import { getDogs } from '@/api/routes';
 import MatchModal from '@/components/MatchModal';
 import useLockBodyScroll from '@/hooks/useLockBodyScroll';
 import { useDogStore } from '@/store/DogStore';

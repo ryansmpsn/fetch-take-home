@@ -6,7 +6,7 @@ import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
 import styled, { css } from 'styled-components';
 import Image from 'next/image';
-import { getDogMatch, getDogs } from '@/api/dog';
+import { getDogMatch, getDogs } from '@/api/routes';
 import { useDogStore } from '@/store/DogStore';
 import { useShallow } from 'zustand/shallow';
 import { useQuery } from '@tanstack/react-query';

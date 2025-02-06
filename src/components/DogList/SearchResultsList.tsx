@@ -1,6 +1,6 @@
 'use client';
 
-import { getDogIDs, getDogs } from '@/api/dog';
+import { getDogIDs, getDogs } from '@/api/routes';
 import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';

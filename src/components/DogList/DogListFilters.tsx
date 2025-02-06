@@ -5,9 +5,9 @@ import Select, { MultiValue } from 'react-select';
 import { useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { getBreeds } from '@/api/dog';
+import { getBreeds } from '@/api/routes';
 import useDebounce from '@/hooks/useDebounce';
-import { SearchLocations } from '@/api/location';
+import { SearchLocations } from '@/api/routes';
 import { STATES } from '@/lib/constants';
 import useIsMounted from '@/hooks/useIsMounted';
 

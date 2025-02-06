@@ -1,5 +1,5 @@
 'use client';
-import { logout } from '@/api/auth';
+import { logout } from '@/api/routes';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
