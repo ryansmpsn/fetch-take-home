@@ -137,7 +137,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
             options={breeds?.map((breed) => ({ value: breed, label: breed }))}
             isMulti
             onChange={handleBreedChange}
-            placeholder="Select breeds..."
+            placeholder="Select Breeds..."
             isClearable
             isLoading={isLoadingBreeds}
           />
@@ -192,7 +192,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
                 label: state.name
               }))}
               onChange={handleStateChange}
-              placeholder="Select States..."
+              placeholder="Select State..."
               isLoading={isLoadingLocations}
               isClearable
             />
@@ -206,9 +206,10 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
               ).map((city) => ({ value: city, label: city }))}
               onChange={(newValue) => setCity(newValue?.value)}
               value={city ? { value: city, label: city } : null}
-              placeholder="Select a City..."
+              placeholder="Select City..."
               isClearable
               isLoading={isLoadingLocations}
+              isDisabled={!debouncedStates?.length}
             />
           </InputGroup>
         </InputRow>
