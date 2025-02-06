@@ -47,14 +47,16 @@ const Content = styled.div`
   display: flex;
   border-radius: 0.75rem;
   flex-direction: column;
-  padding: 2rem;
+  padding: 1.25rem 1.875rem;
+  box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
 
   ${({ theme: { colors } }) => css`
+    background-color: ${colors.white};
     color: ${colors.black};
   `};
 
   h1 {
-    font-size: 2rem;
+    font-size: 1.5rem;
     margin: 1rem 0px;
 
     @media ${({ theme: { device } }) => device.tablet} {

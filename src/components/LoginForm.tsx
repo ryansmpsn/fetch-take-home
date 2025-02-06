@@ -17,6 +17,10 @@ const StyledLoginForm = styled.form`
   gap: 0.5rem;
   width: 15rem;
   margin-inline: auto;
+
+  @media ${({ theme: { device } }) => device.mobileM} {
+    width: 100%;
+  }
 `;
 
 const FieldWrapper = styled.div`

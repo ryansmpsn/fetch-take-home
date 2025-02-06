@@ -12,6 +12,7 @@ export default function Pagination({
   size
 }: PaginationProps) {
   return (
+    // TODO: use next and prev returned from search to paginate
     <div style={{ marginTop: '20px', display: 'flex', gap: '10px' }}>
       <button
         onClick={() => setPage(Math.max(page - 1, 0))}
