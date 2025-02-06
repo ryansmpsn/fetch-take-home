@@ -85,6 +85,7 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
     data: dogMatchId,
     isLoading: isMatchIdLoading,
     isError: isMatchIdError,
+    isFetching: isMatchIdFetching,
     error: matchIdError
   } = useQuery({
     queryFn: () =>
@@ -92,7 +93,6 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
         if (error instanceof Error && error.message === 'Unauthorized') {
           push('/');
         }
-
         throw new Error('Failed to getDogMatch. Please try again later.');
       }),
     queryKey: ['dog', 'match', ...favorites],
@@ -104,6 +104,7 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
   const {
     data: dogMatch,
     isLoading: isMatchLoading,
+    isFetching: isMatchFetching,
     isError: isMatchError,
     error: matchError
   } = useQuery({
@@ -112,32 +113,13 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
         if (error instanceof Error && error.message === 'Unauthorized') {
           push('/');
         }
-
         throw new Error('Failed to getDogs. Please try again later.');
       }),
     queryKey: ['dogs', matchId],
     enabled: !!matchId,
-    refetchOnMount: true,
-    staleTime: 0
+    refetchOnMount: false, // Prevents refetching immediately on mount
+    staleTime: Infinity // Consider data fresh to avoid flashing
   });
-
-  const loadingSpinner = () => {
-    if (isMatchIdLoading || isMatchLoading) {
-      return <LoadingCircle text={'Loading...'} />;
-    }
-
-    return null;
-  };
-  const errorMessage = () => {
-    if (isMatchError || isMatchIdError) {
-      return (
-        <div>
-          Error: {matchIdError?.message} {matchError?.message}
-        </div>
-      );
-    }
-    return null;
-  };
 
   return (
     mainContainer &&
@@ -152,10 +134,15 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
               alt="close button"
             />
           </CloseButton>
-          {loadingSpinner() ? (
-            loadingSpinner()
-          ) : errorMessage() ? (
-            errorMessage()
+          {isMatchIdLoading ||
+          isMatchLoading ||
+          isMatchIdFetching ||
+          isMatchFetching ? (
+            <LoadingCircle text={'Loading...'} />
+          ) : isMatchError || isMatchIdError ? (
+            <div>
+              Error: {matchIdError?.message} {matchError?.message}
+            </div>
           ) : (
             <div>
               <h1>Your Perfect Match</h1>
