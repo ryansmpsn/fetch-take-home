@@ -8,6 +8,39 @@ import { FormProvider, useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { LoginFormBody } from '@/types';
 import Button from './Button';
+import styled from 'styled-components';
+
+const StyledLoginForm = styled.form`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  width: 15rem;
+  margin-inline: auto;
+`;
+
+const FieldWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+`;
+
+const StyledInput = styled.input`
+  padding: 0.9375rem;
+  border: 1px solid ${({ theme }) => theme.colors.lightborder};
+  border-radius: 3px;
+  margin-bottom: 10px;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.8125rem;
+  font-family: var(--font-roboto);
+`;
+
+const FieldError = styled.p`
+  margin: 0px;
+  color: ${({ theme }) => theme.colors.danger};
+  font-size: 0.625rem;
+`;
 
 interface LoginFormValues {
   firstName: string;
@@ -59,30 +92,38 @@ export default function LoginForm() {
 
   return (
     <FormProvider {...methods}>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <input
+      <StyledLoginForm onSubmit={handleSubmit(onSubmit)}>
+        <FieldWrapper>
+          <StyledInput
             type="text"
             placeholder="First name"
             {...register('firstName')}
           />
-          {errors.firstName && <p>{errors.firstName.message}</p>}
-        </div>
-        <div>
-          <input
+          {errors.firstName && (
+            <FieldError>{errors.firstName.message}</FieldError>
+          )}
+        </FieldWrapper>
+        <FieldWrapper>
+          <StyledInput
             type="text"
             placeholder="Last name"
             {...register('lastName')}
           />
-          {errors.lastName && <p>{errors.lastName.message}</p>}
-        </div>
-        <div>
-          <input type="email" placeholder="Email" {...register('email')} />
-          {errors.email && <p>{errors.email.message}</p>}
-        </div>
-        <button type="submit">Login</button>
-      </form>
-      <Button style="button">Click me</Button>
+          {errors.lastName && (
+            <FieldError>{errors.lastName.message}</FieldError>
+          )}
+        </FieldWrapper>
+        <FieldWrapper>
+          <StyledInput
+            type="email"
+            placeholder="Email"
+            {...register('email')}
+          />
+          {errors.email && <FieldError>{errors.email.message}</FieldError>}
+        </FieldWrapper>
+
+        <Button type="submit">Login</Button>
+      </StyledLoginForm>
     </FormProvider>
   );
 }
