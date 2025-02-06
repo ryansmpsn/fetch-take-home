@@ -36,6 +36,7 @@ const ButtonContainer = styled.div`
 
 const DogGrid = styled.div`
   display: grid;
+  grid-auto-flow: row;
   grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
   gap: 1.25rem;
 `;

@@ -10,6 +10,9 @@ const Card = styled.div`
   border-radius: 12px;
   overflow: hidden;
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
+  max-width: 400px;
+  width: 100%;
+  margin-inline: auto;
 `;
 
 const StyledImage = styled(Image)`

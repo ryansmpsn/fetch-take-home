@@ -20,6 +20,7 @@ const Title = styled.h1``;
 
 const Description = styled.h3`
   margin: 0px;
+  max-width: 37.5rem;
 `;
 
 const Count = styled.h4`
@@ -63,7 +64,7 @@ export default function SearchPage() {
       <Title>Search</Title>
       <Description>
         Select {MAX_FAVORITES} dogs to match with. You can filter by breed, age,
-        and location.
+        and location. Then go to the Favorites page to generate your match.
       </Description>
 
       <SearchContainer>
