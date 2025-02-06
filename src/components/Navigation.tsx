@@ -15,6 +15,7 @@ const MainNav = styled.nav`
   justify-content: space-between;
   z-index: 2;
   padding: 0px 1rem;
+  background-color: ${({ theme }) => theme.colors.white};
   box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);
 `;
 

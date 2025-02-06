@@ -13,7 +13,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
 const Backdrop = styled.div`
-  position: absolute;
+  position: fixed;
   inset: 0;
   background: rgba(74, 77, 80, 0.8);
   z-index: 1000;
@@ -30,7 +30,6 @@ const Container = styled.dialog`
   padding: 2rem 5rem;
   border-radius: 8px;
   color: black;
-
   background: white;
   border: 1px solid black;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
