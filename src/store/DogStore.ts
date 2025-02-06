@@ -1,3 +1,4 @@
+import { MAX_FAVORITES } from '@/lib/constants';
 import { Dog } from '@/types';
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
@@ -13,16 +14,18 @@ interface DogStore {
 export const useDogStore = create<DogStore>()(
   persist(
     (set) => ({
-      //   TODO: handle more than 100 favs
       favorites: [],
       removedFavorites: [],
       addFavorite: (dogId: Dog['id']) =>
-        set((state: DogStore) => ({
-          favorites: [...state.favorites, dogId],
-          removedFavorites: state.removedFavorites.filter(
-            (fav) => fav !== dogId
-          )
-        })),
+        set((state: DogStore) => {
+          if (state.favorites.length >= MAX_FAVORITES) return state;
+          return {
+            favorites: [...state.favorites, dogId],
+            removedFavorites: state.removedFavorites.filter(
+              (fav) => fav !== dogId
+            )
+          };
+        }),
       removeFavorite: (dogId: Dog['id']) =>
         set((state: DogStore) => ({
           favorites: state.favorites.filter((fav) => fav !== dogId),

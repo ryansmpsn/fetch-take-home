@@ -9,41 +9,19 @@ import { useMutation } from '@tanstack/react-query';
 import { LoginFormBody } from '@/types';
 import Button from './Button';
 import styled from 'styled-components';
+import { Input } from './Input';
 
 const StyledLoginForm = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.5rem;
+  gap: 1rem;
   width: 15rem;
   margin-inline: auto;
 
   @media ${({ theme: { device } }) => device.mobileM} {
     width: 100%;
   }
-`;
-
-const FieldWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-`;
-
-const StyledInput = styled.input`
-  padding: 0.9375rem;
-  border: 1px solid ${({ theme }) => theme.colors.lightborder};
-  border-radius: 3px;
-  margin-bottom: 10px;
-  width: 100%;
-  box-sizing: border-box;
-  font-size: 0.8125rem;
-  font-family: var(--font-roboto);
-`;
-
-const FieldError = styled.p`
-  margin: 0px;
-  color: ${({ theme }) => theme.colors.danger};
-  font-size: 0.625rem;
 `;
 
 interface LoginFormValues {
@@ -97,34 +75,26 @@ export default function LoginForm() {
   return (
     <FormProvider {...methods}>
       <StyledLoginForm onSubmit={handleSubmit(onSubmit)}>
-        <FieldWrapper>
-          <StyledInput
-            type="text"
-            placeholder="First name"
-            {...register('firstName')}
-          />
-          {errors.firstName && (
-            <FieldError>{errors.firstName.message}</FieldError>
-          )}
-        </FieldWrapper>
-        <FieldWrapper>
-          <StyledInput
-            type="text"
-            placeholder="Last name"
-            {...register('lastName')}
-          />
-          {errors.lastName && (
-            <FieldError>{errors.lastName.message}</FieldError>
-          )}
-        </FieldWrapper>
-        <FieldWrapper>
-          <StyledInput
-            type="email"
-            placeholder="Email"
-            {...register('email')}
-          />
-          {errors.email && <FieldError>{errors.email.message}</FieldError>}
-        </FieldWrapper>
+        <Input
+          type="text"
+          placeholder="First name"
+          {...register('firstName')}
+          errors={errors?.firstName?.message}
+        />
+
+        <Input
+          type="text"
+          placeholder="Last Name"
+          {...register('lastName')}
+          errors={errors?.lastName?.message}
+        />
+
+        <Input
+          type="email"
+          placeholder="Email"
+          {...register('email')}
+          errors={errors?.email?.message}
+        />
 
         <Button type="submit">Login</Button>
       </StyledLoginForm>

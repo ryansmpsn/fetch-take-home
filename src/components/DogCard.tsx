@@ -1,7 +1,7 @@
 import { Dog } from '@/types';
 import Image from 'next/image';
 import Link from 'next/link';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 
 const Card = styled.div`
   position: relative;
@@ -51,6 +51,7 @@ const Detail = styled.p`
 
   a {
     color: ${({ theme: { colors } }) => colors.muted};
+    transition: color 0.25s;
 
     &:hover,
     &:focus {
@@ -59,7 +60,7 @@ const Detail = styled.p`
   }
 `;
 
-const FavoriteButton = styled.button`
+const FavoriteButton = styled.button<{ $isFavorite?: boolean }>`
   position: absolute;
   padding: 0.25rem;
   top: 0.5rem;
@@ -68,14 +69,21 @@ const FavoriteButton = styled.button`
   width: 1.625rem;
   border: none;
   border-radius: 4px;
-  transition: opacity 0.25s;
-  background-color: ${({ theme: { colors } }) => colors.danger};
+  transition: opacity 0.25s, background-color 0.25s, filter 0.25s;
+  filter: invert(100%);
 
-  &:hover,
-  &:focus {
-    opacity: 0.8;
-    cursor: pointer;
-  }
+  ${({ theme: { colors }, $isFavorite }) => css`
+    ${$isFavorite
+      ? `filter: none; background-color: ${colors.success};`
+      : `background-color: transparent;`}
+
+    &:hover,
+    &:focus {
+      opacity: 0.8;
+      cursor: pointer;
+      filter: none;
+    }
+  `}
 `;
 
 const HeartIcon = styled(Image)`
@@ -88,10 +96,16 @@ const HeartIcon = styled(Image)`
 type DogCardProps = {
   dog: Dog;
   onClick?: () => void;
-  isMatch?: boolean;
+  isFavorite?: boolean;
+  disabled?: boolean;
 };
 
-export default function DogCard({ dog, onClick, isMatch }: DogCardProps) {
+export default function DogCard({
+  dog,
+  onClick,
+  isFavorite,
+  disabled
+}: DogCardProps) {
   return (
     <Card>
       <StyledImage
@@ -101,8 +115,8 @@ export default function DogCard({ dog, onClick, isMatch }: DogCardProps) {
         alt={`${dog.name}'s portrait' `}
         priority
       />
-      {!isMatch && (
-        <FavoriteButton onClick={onClick}>
+      {!disabled && (
+        <FavoriteButton onClick={onClick} $isFavorite={isFavorite}>
           <HeartIcon
             width={18}
             height={18}

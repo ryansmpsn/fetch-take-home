@@ -8,6 +8,7 @@ export type ButtonProps = {
   type?: 'button' | 'reset' | 'submit';
   disabled?: boolean;
   onClick?: () => void;
+  className?: string;
 };
 
 const StyledButton = styled.button<ButtonProps>`
@@ -40,8 +41,7 @@ const StyledButton = styled.button<ButtonProps>`
     }
   }
 
-  &:hover,
-  &:focus {
+  &:hover {
     ${({ theme: { colors } }) => css`
       background-color: ${colors.white};
       color: ${colors.primary};
@@ -50,7 +50,10 @@ const StyledButton = styled.button<ButtonProps>`
 
   &:disabled {
     cursor: not-allowed;
-    background-color: ${({ theme }) => theme.colors.muted};
+    ${({ theme: { colors } }) => css`
+      background-color: ${colors.muted};
+      color: ${colors.white};
+    `};
   }
 `;
 
@@ -65,17 +68,19 @@ const InnerWrapper = styled.span`
   font-family: var(--font-roboto);
 `;
 
-function Button({ children, ...props }: ButtonProps) {
+function Button({ children, className, ...props }: ButtonProps) {
   const buttonProps = {
     type: props.type ?? 'button',
     onClick: props.onClick,
     disabled: props.disabled ?? false,
-    role: 'button'
+    role: 'button',
+    'aria-disabled': props.disabled,
+    className: className
   };
 
   return (
     <StyledButton aria-label={`${buttonProps.type}-button`} {...buttonProps}>
-      <InnerWrapper className="button-text">{children}</InnerWrapper>
+      <InnerWrapper>{children}</InnerWrapper>
     </StyledButton>
   );
 }

@@ -5,6 +5,7 @@ import Button from '@/components/Button';
 import DogCard from '@/components/DogCard';
 import MatchModal from '@/components/MatchModal';
 import useLockBodyScroll from '@/hooks/useLockBodyScroll';
+import { MAX_FAVORITES } from '@/lib/constants';
 import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
@@ -18,8 +19,10 @@ const Container = styled.div`
   padding: 0px 1rem;
 `;
 
-const Title = styled.h1`
-  margin-inline: auto;
+const Title = styled.h1``;
+
+const Description = styled.h3`
+  margin: 0;
 `;
 
 const ButtonContainer = styled.div`
@@ -28,12 +31,12 @@ const ButtonContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 2rem;
-  margin-top: 2rem;
+  margin: 2rem 0px;
 `;
 
 const DogGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
   gap: 1.25rem;
 `;
 
@@ -82,7 +85,10 @@ export default function FavoritesPage() {
   return (
     <>
       <Container>
-        <Title> Your Favorite Pets</Title>
+        <Title>Favorites</Title>
+        <Description>
+          Review your favorite dogs and generate your perfect match below!
+        </Description>
         {dogs && (
           <h2>
             {favorites.length} Favorite{favorites.length ? 's' : ''}
@@ -96,6 +102,7 @@ export default function FavoritesPage() {
                 key={dog.id}
                 onClick={() => removeFavorite(dog.id)}
                 dog={dog}
+                isFavorite
               />
             ))}
           </DogGrid>
@@ -107,7 +114,7 @@ export default function FavoritesPage() {
         )}
 
         <ButtonContainer>
-          {removedFavorites.length ? (
+          {removedFavorites.length && favorites.length < MAX_FAVORITES ? (
             <Button onClick={undoRemove}>Undo Remove</Button>
           ) : null}
           {favorites && (

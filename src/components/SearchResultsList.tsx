@@ -5,12 +5,20 @@ import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useShallow } from 'zustand/shallow';
-import Pagination from '../Pagination';
+import Pagination from './Pagination';
 import { useState } from 'react';
-import { PAGESIZE } from '@/lib/constants';
+import { MAX_FAVORITES, PAGESIZE } from '@/lib/constants';
 import { DogFilters, DogSortOption } from '@/types';
+import DogCard from './DogCard';
+import styled from 'styled-components';
 
 const size = PAGESIZE;
+
+const DogGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(18.75rem, 1fr));
+  gap: 1.25rem;
+`;
 
 export default function SearchResultsList({
   filters,
@@ -72,6 +80,9 @@ export default function SearchResultsList({
       removeFavorite(dogId);
     } else {
       addFavorite(dogId);
+      if (favorites.length === MAX_FAVORITES) {
+        push('/favorites');
+      }
     }
   };
 
@@ -86,31 +97,27 @@ export default function SearchResultsList({
       </div>
     );
   }
-  // TODO: semantic html li ul etc..
-  // TODO: add optimistic updates
+
   return (
     <>
-      {dogs?.map((dog) => (
-        <p
-          key={dog.id}
-          onClick={() => handleDogClick(dog.id)}
-          style={{
-            cursor: 'pointer',
-            color: favorites.includes(dog.id) ? 'lightblue' : 'green',
-            padding: '8px',
-            margin: '4px',
-            borderRadius: '4px'
-          }}
-        >
-          {dog.name} - {dog.breed} - {dog.age}
-        </p>
-      ))}
+      <DogGrid>
+        {dogs?.map((dog) => (
+          <DogCard
+            key={dog.id}
+            dog={dog}
+            onClick={() => handleDogClick(dog.id)}
+            isFavorite={favorites.includes(dog.id)}
+            disabled={favorites.length === MAX_FAVORITES}
+          />
+        ))}
+      </DogGrid>
 
       <Pagination
         page={page}
         setPage={setPage}
         dogIdsList={dogIdsList}
         size={size}
+        total={dogIds?.total || 0}
       />
     </>
   );

@@ -146,7 +146,7 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
 
           <div>
             <h1>Your Perfect Match</h1>
-            {dogMatch && <DogCard dog={dogMatch[0]} isMatch />}
+            {dogMatch && <DogCard dog={dogMatch[0]} disabled />}
           </div>
         </Container>
       </Backdrop>,
