@@ -11,6 +11,11 @@ import Button from './Button';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const Header = styled.h3`
+  margin-bottom: 0px;
 `;
 
 const InputGroup = styled.div`
@@ -59,7 +64,7 @@ export default function DogSortOptions({ onChange }: DogSortOptionsProps) {
 
   return (
     <Container>
-      <h3>Sorting</h3>
+      <Header>Sorting</Header>
       <InputGroup>
         <Label>Sort By:</Label>
         {isMounted && (

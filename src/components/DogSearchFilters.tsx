@@ -17,6 +17,11 @@ import { StyledSelect } from './StyledSelect';
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 0.5rem;
+`;
+
+const Header = styled.h3`
+  margin-bottom: 0px;
 `;
 
 const InputGroup = styled.div`
@@ -27,13 +32,28 @@ const InputGroup = styled.div`
   margin: 0.25rem 0px;
 `;
 
-const InputRow = styled.div`
+const AgeRow = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
   gap: 1rem;
 
   @media ${({ theme: { device } }) => device.mobileL} {
+    flex-direction: column;
+  }
+`;
+
+const LocationRow = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 1rem;
+
+  @media ${({ theme: { device } }) => device.laptopL} {
+    flex-direction: row;
+  }
+
+  @media ${({ theme: { device } }) => device.tablet} {
     flex-direction: column;
   }
 `;
@@ -129,7 +149,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
   return (
     isMounted && (
       <Container>
-        <h3>Filtering</h3>
+        <Header>Filtering</Header>
         <InputGroup>
           <Label>Breeds:</Label>
 
@@ -143,7 +163,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
           />
         </InputGroup>
 
-        <InputRow>
+        <AgeRow>
           <InputGroup>
             <Label>Min Age:</Label>
 
@@ -181,8 +201,8 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
               }
             />
           </InputGroup>
-        </InputRow>
-        <InputRow>
+        </AgeRow>
+        <LocationRow>
           <InputGroup>
             <Label>States:</Label>
 
@@ -212,7 +232,7 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
               isDisabled={!debouncedStates?.length}
             />
           </InputGroup>
-        </InputRow>
+        </LocationRow>
       </Container>
     )
   );
