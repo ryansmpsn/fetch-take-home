@@ -3,7 +3,8 @@
 import type React from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ThemeProvider } from 'styled-components';
-import { defaultTheme } from 'react-select';
+import { defaultTheme } from '../styles/Theme';
+
 import StyledComponentsRegistry from '@/lib/registry';
 
 const queryClient = new QueryClient();

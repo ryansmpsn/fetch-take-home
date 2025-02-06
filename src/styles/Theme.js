@@ -20,9 +20,10 @@ const device = {
 
 const colors = {
   lightborder: '#dee2e6',
+  danger: '#dc3545',
+  muted: '#4c4c4c',
 
   text: '#363537',
-  muted: '#4c4c4c',
   background: '#FFF',
   foreground: '#dcdcdc',
   anotherPurple: '#230871',
@@ -58,7 +59,6 @@ const colors = {
   success: '#04833e',
   info: '#17a2b8',
   warning: '#ffdf02',
-  danger: '#dc3545',
   focus: '#99d9f0',
   light: '#f8f9fa',
   dark: '#343a40'
@@ -68,7 +68,3 @@ export const defaultTheme = {
   colors: colors,
   device: device
 };
-
-// --fetch-font-primary: "Lexend","sans-serif";
-// --fetch-font-secondary: "Rubik","sans-serif";
-// --fetch-font-tertiary: "Cactus","Arial","sans-serif";
