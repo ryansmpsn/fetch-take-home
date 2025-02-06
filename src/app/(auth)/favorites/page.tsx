@@ -3,6 +3,7 @@
 import { getDogs } from '@/api/routes';
 import Button from '@/components/Button';
 import DogCard from '@/components/DogCard';
+import { LoadingCircle } from '@/components/LoadingCircle';
 import MatchModal from '@/components/MatchModal';
 import useLockBodyScroll from '@/hooks/useLockBodyScroll';
 import { MAX_FAVORITES } from '@/lib/constants';
@@ -76,7 +77,7 @@ export default function FavoritesPage() {
   });
 
   if (isLoading) {
-    return <div>Loading dogs...</div>;
+    return <LoadingCircle text={'Loading...'} />;
   }
 
   if (isError) {

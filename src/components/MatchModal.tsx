@@ -12,6 +12,7 @@ import { useShallow } from 'zustand/shallow';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import DogCard from './DogCard';
+import { LoadingCircle } from './LoadingCircle';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -115,20 +116,28 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
         throw new Error('Failed to getDogs. Please try again later.');
       }),
     queryKey: ['dogs', matchId],
-    enabled: !!matchId
+    enabled: !!matchId,
+    refetchOnMount: true,
+    staleTime: 0
   });
 
-  if (isMatchIdLoading || isMatchLoading) {
-    return <div>Loading dogs...</div>;
-  }
+  const loadingSpinner = () => {
+    if (isMatchIdLoading || isMatchLoading) {
+      return <LoadingCircle text={'Loading...'} />;
+    }
 
-  if (isMatchError || isMatchIdError) {
-    return (
-      <div>
-        Error: {matchIdError?.message} {matchError?.message}
-      </div>
-    );
-  }
+    return null;
+  };
+  const errorMessage = () => {
+    if (isMatchError || isMatchIdError) {
+      return (
+        <div>
+          Error: {matchIdError?.message} {matchError?.message}
+        </div>
+      );
+    }
+    return null;
+  };
 
   return (
     mainContainer &&
@@ -143,11 +152,16 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
               alt="close button"
             />
           </CloseButton>
-
-          <div>
-            <h1>Your Perfect Match</h1>
-            {dogMatch && <DogCard dog={dogMatch[0]} disabled />}
-          </div>
+          {loadingSpinner() ? (
+            loadingSpinner()
+          ) : errorMessage() ? (
+            errorMessage()
+          ) : (
+            <div>
+              <h1>Your Perfect Match</h1>
+              {dogMatch && <DogCard dog={dogMatch[0]} disabled />}
+            </div>
+          )}
         </Container>
       </Backdrop>,
       mainContainer

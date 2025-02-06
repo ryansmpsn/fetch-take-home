@@ -10,6 +10,7 @@ import { MAX_FAVORITES, PAGESIZE } from '@/lib/constants';
 import { DogFilters, DogSortOption } from '@/types';
 import DogCard from './DogCard';
 import styled from 'styled-components';
+import { LoadingCircle } from './LoadingCircle';
 
 const DogGrid = styled.div`
   display: grid;
@@ -90,7 +91,7 @@ export default function SearchResultsList({
   };
 
   if (isDogIdsLoading || isDogsLoading) {
-    return <div>Loading dogs...</div>;
+    return <LoadingCircle text={'Loading...'} />;
   }
 
   if (isDogIDsError || isDogsError) {
