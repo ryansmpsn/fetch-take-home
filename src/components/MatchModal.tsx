@@ -4,13 +4,14 @@ import useOutsideClick from '@/hooks/useOutsideClick';
 import type { PropsWithChildren } from 'react';
 import React, { useRef } from 'react';
 import { createPortal } from 'react-dom';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import Image from 'next/image';
 import { getDogMatch, getDogs } from '@/api/routes';
 import { useDogStore } from '@/store/DogStore';
 import { useShallow } from 'zustand/shallow';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import DogCard from './DogCard';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -27,11 +28,11 @@ const Backdrop = styled.div`
 const Container = styled.dialog`
   display: flex;
   position: relative;
-  padding: 2rem 5rem;
+  padding: 2rem;
   border-radius: 8px;
   color: black;
   background: white;
-  border: 1px solid black;
+  border: none;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 `;
 
@@ -42,10 +43,13 @@ const CloseButton = styled.button`
   right: 0.5rem;
   height: 2rem;
   width: 2rem;
+  border: none;
+  border-radius: 4px;
+  transition: opacity 0.25s;
 
   &:hover,
   &:focus {
-    background-color: black;
+    opacity: 0.5;
   }
 `;
 
@@ -141,19 +145,8 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
           </CloseButton>
 
           <div>
-            <h1>Perfect Match</h1>
-            <div>
-              <h2>
-                {dogMatch?.map((dog) => (
-                  <div key={dog.id}>
-                    <p>{dog.name}</p>
-                    <p>{dog.age}</p>
-                    <p>{dog.breed}</p>
-                    <p>{dog.zip_code}</p>
-                  </div>
-                ))}
-              </h2>
-            </div>
+            <h1>Your Perfect Match</h1>
+            {dogMatch && <DogCard dog={dogMatch[0]} isMatch />}
           </div>
         </Container>
       </Backdrop>,

@@ -1,14 +1,41 @@
 'use client';
 
 import { getDogs } from '@/api/routes';
+import Button from '@/components/Button';
+import DogCard from '@/components/DogCard';
 import MatchModal from '@/components/MatchModal';
 import useLockBodyScroll from '@/hooks/useLockBodyScroll';
 import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
-import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
+import styled from 'styled-components';
 import { useShallow } from 'zustand/shallow';
+
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  padding: 0px 1rem;
+`;
+
+const Title = styled.h1`
+  margin-inline: auto;
+`;
+
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-top: 2rem;
+`;
+
+const DogGrid = styled.div`
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(12.5rem, 1fr));
+  gap: 1.25rem;
+`;
 
 export default function FavoritesPage() {
   const [openModal, setOpenModal] = useState(false);
@@ -54,38 +81,42 @@ export default function FavoritesPage() {
 
   return (
     <>
-      <div>
-        <h1>Favorites page</h1>
-        <h2>
-          You have {favorites.length} Favorite{favorites.length ? 's' : ''}
-        </h2>
-        {removedFavorites.length && (
-          <button onClick={undoRemove}>undo remove</button>
+      <Container>
+        <Title> Your Favorite Pets</Title>
+        {dogs && (
+          <h2>
+            {favorites.length} Favorite{favorites.length ? 's' : ''}
+          </h2>
         )}
-        {dogs?.map((dog) => (
-          <p
-            key={dog.id}
-            onClick={() => removeFavorite(dog.id)}
-            style={{
-              cursor: 'pointer',
-              color: favorites.includes(dog.id) ? 'lightblue' : 'green',
-              padding: '8px',
-              margin: '4px',
-              borderRadius: '4px'
-            }}
-          >
-            {dog.name}
-          </p>
-        ))}
-        <Link href="/">Back to Search</Link>
-        {favorites ? (
-          <button onClick={() => setOpenModal(true)}>
-            Generate your perfect match
-          </button>
+
+        {dogs ? (
+          <DogGrid>
+            {dogs?.map((dog) => (
+              <DogCard
+                key={dog.id}
+                onClick={() => removeFavorite(dog.id)}
+                dog={dog}
+              />
+            ))}
+          </DogGrid>
         ) : (
-          <p>Go to the search page to add favorites</p>
+          <>
+            <p>Oh No! You have no favorite dogs.</p>
+            <p>Head to the search page to choose from our furry friends.</p>
+          </>
         )}
-      </div>
+
+        <ButtonContainer>
+          {removedFavorites.length ? (
+            <Button onClick={undoRemove}>Undo Remove</Button>
+          ) : null}
+          {favorites && (
+            <Button onClick={() => setOpenModal(true)} disabled={!dogs}>
+              Generate your perfect match!
+            </Button>
+          )}
+        </ButtonContainer>
+      </Container>
       {openModal && <MatchModal setClose={() => setOpenModal(false)} />}
     </>
   );
