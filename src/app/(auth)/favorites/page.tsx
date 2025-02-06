@@ -35,7 +35,7 @@ export default function FavoritesPage() {
     queryFn: () =>
       getDogs(favorites).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to getDogs. Please try again later.');
