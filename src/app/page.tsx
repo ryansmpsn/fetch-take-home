@@ -1,15 +1,10 @@
-import DogList from '@/components/DogList/DogList';
-import Link from 'next/link';
+import LoginForm from '@/components/LoginForm';
 
-export default function Home() {
+export default function LoginPage() {
   return (
     <div>
-      <DogList />
-      <div>
-        <h2>Favorited Dogs: TODO Make this a separate page</h2>
-
-        <Link href="/favorites">review favorited dogs</Link>
-      </div>
+      <h1>Login</h1>
+      <LoginForm />
     </div>
   );
 }

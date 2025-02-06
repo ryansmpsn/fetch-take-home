@@ -35,7 +35,7 @@ export default function DogListFilters({ onChange }: DogListFiltersProps) {
     queryFn: () =>
       getBreeds().catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to getBreeds. Please try again later.');
@@ -52,7 +52,7 @@ export default function DogListFilters({ onChange }: DogListFiltersProps) {
         size: 10000
       }).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to getBreeds. Please try again later.');

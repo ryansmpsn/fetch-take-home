@@ -11,7 +11,7 @@ export default function LogoutButton() {
       await logout();
     },
     onSuccess: () => {
-      push('/login');
+      push('/');
     },
     onError: (error: Error) => {
       console.error('logout error:', error);

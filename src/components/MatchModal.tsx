@@ -86,7 +86,7 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
     queryFn: () =>
       getDogMatch(favorites).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to getDogMatch. Please try again later.');
@@ -106,7 +106,7 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
     queryFn: () =>
       getDogs([matchId]).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to getDogs. Please try again later.');

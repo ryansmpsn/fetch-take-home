@@ -39,7 +39,7 @@ export default function SearchResultsList({
     queryFn: () =>
       getDogIDs(page, size, filters, sortOption).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to fetch getDogIDs. Please try again later.');
@@ -58,7 +58,7 @@ export default function SearchResultsList({
     queryFn: () =>
       getDogs(dogIdsList).catch((error) => {
         if (error instanceof Error && error.message === 'Unauthorized') {
-          push('/login');
+          push('/');
         }
 
         throw new Error('Failed to getDogs. Please try again later.');

@@ -7,6 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { LoginFormBody } from '@/types';
+import Button from './Button';
 
 interface LoginFormValues {
   firstName: string;
@@ -41,7 +42,7 @@ export default function LoginForm() {
       await login(payload);
     },
     onSuccess: () => {
-      push('/');
+      push('/search');
     },
     onError: (error: Error) => {
       console.error('Login error:', error);
@@ -81,6 +82,7 @@ export default function LoginForm() {
         </div>
         <button type="submit">Login</button>
       </form>
+      <Button style="button">Click me</Button>
     </FormProvider>
   );
 }
