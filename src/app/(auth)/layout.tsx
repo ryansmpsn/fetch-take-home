@@ -1,5 +1,4 @@
 import Navigation from '@/components/Navigation';
-import Footer from '@/components/Footer';
 
 export default function AuthLayout({
   children
@@ -10,7 +9,6 @@ export default function AuthLayout({
     <>
       <Navigation />
       <main id="main">{children}</main>
-      <Footer />
     </>
   );
 }
