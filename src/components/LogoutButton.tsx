@@ -2,6 +2,7 @@
 import { logout } from '@/api/routes';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import Button from './Button';
 
 export default function LogoutButton() {
   const { push } = useRouter();
@@ -21,5 +22,5 @@ export default function LogoutButton() {
   const handleLogout = async () => {
     logoutMutation.mutate();
   };
-  return <button onClick={handleLogout}>logout</button>;
+  return <Button onClick={handleLogout}>Logout</Button>;
 }
