@@ -15,7 +15,9 @@ pnpm install
 bun install
 ```
 
-2. Start the Development Server
+2. Add and ensure you have the proper variables in your `.env` file
+
+3. Start the Development Server
    Run the following command to start the development server:
 
 ```bash
