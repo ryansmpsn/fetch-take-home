@@ -22,9 +22,12 @@ const StyledButton = styled.button<ButtonProps>`
   text-decoration: none;
   background-color: ${({ theme }) => theme.colors.primary};
   border-radius: 0.375rem;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
+  box-shadow:
+    0 4px 6px -1px rgba(0, 0, 0, 0.1),
     0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.25s, color 0.25s;
+  transition:
+    background-color 0.25s,
+    color 0.25s;
 
   ${({ theme: { colors } }) => css`
     background-color: ${colors.primary};
@@ -58,11 +61,11 @@ const StyledButton = styled.button<ButtonProps>`
 `;
 
 const InnerWrapper = styled.span`
-  font-size: 1rem;
+  font-size: 0.875rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  line-height: 1.25;
+  line-height: 1.5;
   position: relative;
   top: 1px;
   font-family: var(--font-roboto);

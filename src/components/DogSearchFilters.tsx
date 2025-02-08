@@ -20,23 +20,11 @@ const Container = styled.div`
   gap: 0.5rem;
 `;
 
-const Header = styled.h3`
-  margin-bottom: 0px;
-`;
-
-const InputGroup = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  flex: 1;
-  margin: 0.25rem 0px;
-`;
-
 const AgeRow = styled.div`
   display: flex;
   flex-direction: row;
   flex: 1;
-  gap: 1rem;
+  gap: 0.5rem;
 
   @media ${({ theme: { device } }) => device.mobileL} {
     flex-direction: column;
@@ -47,7 +35,7 @@ const LocationRow = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
-  gap: 1rem;
+  gap: 0.5rem;
 
   @media ${({ theme: { device } }) => device.laptopL} {
     flex-direction: row;
@@ -57,8 +45,6 @@ const LocationRow = styled.div`
     flex-direction: column;
   }
 `;
-
-const Label = styled.label``;
 
 type DogSearchFiltersProps = {
   onChange: (filters: DogFilters) => void;
@@ -149,89 +135,68 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
   return (
     isMounted && (
       <Container>
-        <Header>Filtering</Header>
-        <InputGroup>
-          <Label>Breeds:</Label>
-
-          <StyledSelect
-            options={breeds?.map((breed) => ({ value: breed, label: breed }))}
-            isMulti
-            onChange={handleBreedChange}
-            placeholder="Select Breeds..."
-            isClearable
-            isLoading={isLoadingBreeds}
-          />
-        </InputGroup>
+        <StyledSelect
+          options={breeds?.map((breed) => ({ value: breed, label: breed }))}
+          isMulti
+          onChange={handleBreedChange}
+          placeholder="Select Breeds..."
+          isClearable
+          isLoading={isLoadingBreeds}
+        />
 
         <AgeRow>
-          <InputGroup>
-            <Label>Min Age:</Label>
+          <Input
+            type="number"
+            placeholder="Min Age"
+            value={ageMin ?? ''}
+            min={0}
+            max={25}
+            onChange={(e) => {
+              setAgeMin(e.target.value ? parseInt(e.target.value) : undefined);
+              setAgeMax((prev) =>
+                prev && prev < parseInt(e.target.value) ? undefined : prev
+              );
+            }}
+          />
 
-            <Input
-              type="number"
-              placeholder="Min Age"
-              value={ageMin ?? ''}
-              min={0}
-              max={25}
-              onChange={(e) => {
-                setAgeMin(
-                  e.target.value ? parseInt(e.target.value) : undefined
-                );
-                setAgeMax((prev) =>
-                  prev && prev < parseInt(e.target.value) ? undefined : prev
-                );
-              }}
-            />
-          </InputGroup>
-          <InputGroup>
-            <Label>Max Age:</Label>
-
-            <Input
-              type="number"
-              placeholder="Max Age"
-              value={ageMax ?? ''}
-              min={ageMin ? ageMin : 1}
-              max={25}
-              onChange={(e) =>
-                setAgeMax(
-                  Number.isNaN(parseInt(e.target.value))
-                    ? undefined
-                    : parseInt(e.target.value)
-                )
-              }
-            />
-          </InputGroup>
+          <Input
+            type="number"
+            placeholder="Max Age"
+            value={ageMax ?? ''}
+            min={ageMin ? ageMin : 1}
+            max={25}
+            onChange={(e) =>
+              setAgeMax(
+                Number.isNaN(parseInt(e.target.value))
+                  ? undefined
+                  : parseInt(e.target.value)
+              )
+            }
+          />
         </AgeRow>
         <LocationRow>
-          <InputGroup>
-            <Label>States:</Label>
+          <StyledSelect
+            options={STATES?.map((state) => ({
+              value: state.abbreviation,
+              label: state.name
+            }))}
+            onChange={handleStateChange}
+            placeholder="Select State..."
+            isLoading={isLoadingLocations}
+            isClearable
+          />
 
-            <StyledSelect
-              options={STATES?.map((state) => ({
-                value: state.abbreviation,
-                label: state.name
-              }))}
-              onChange={handleStateChange}
-              placeholder="Select State..."
-              isLoading={isLoadingLocations}
-              isClearable
-            />
-          </InputGroup>
-          <InputGroup>
-            <Label>City:</Label>
-
-            <StyledSelect
-              options={Array.from(
-                new Set(locations?.results.map((location) => location.city))
-              ).map((city) => ({ value: city, label: city }))}
-              onChange={(newValue) => setCity(newValue?.value)}
-              value={city ? { value: city, label: city } : null}
-              placeholder="Select City..."
-              isClearable
-              isLoading={isLoadingLocations}
-              isDisabled={!debouncedStates?.length}
-            />
-          </InputGroup>
+          <StyledSelect
+            options={Array.from(
+              new Set(locations?.results.map((location) => location.city))
+            ).map((city) => ({ value: city, label: city }))}
+            onChange={(newValue) => setCity(newValue?.value)}
+            value={city ? { value: city, label: city } : null}
+            placeholder="Select City..."
+            isClearable
+            isLoading={isLoadingLocations}
+            isDisabled={!debouncedStates?.length}
+          />
         </LocationRow>
       </Container>
     )

@@ -12,7 +12,6 @@ import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 import styled from 'styled-components';
-import { useShallow } from 'zustand/shallow';
 
 const Container = styled.div`
   display: flex;
@@ -20,10 +19,30 @@ const Container = styled.div`
   padding: 0px 1rem;
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  font-weight: 700;
+  font-size: 70px;
+  color: ${({ theme }) => theme.colors.primary};
+  max-width: 420px;
+`;
 
 const Description = styled.h3`
-  margin: 0;
+  margin: 0px 0px 2rem;
+  max-width: 37.5rem;
+`;
+
+const Count = styled.h4`
+  margin: 0px 0px 0.25rem;
+`;
+
+const Warning = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  margin: 2rem 0px;
+  font-size: 1.25rem;
+  color: ${({ theme }) => theme.colors.primary};
 `;
 
 const ButtonContainer = styled.div`
@@ -38,7 +57,7 @@ const ButtonContainer = styled.div`
 const DogGrid = styled.div`
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
   gap: 1.25rem;
 `;
 
@@ -49,18 +68,11 @@ export default function FavoritesPage() {
   const { push } = useRouter();
 
   const { favorites, removedFavorites, undoRemove, removeFavorite } =
-    useDogStore(
-      useShallow((state) => ({
-        favorites: state.favorites,
-        removedFavorites: state.removedFavorites,
-        undoRemove: state.undoRemove,
-        removeFavorite: state.removeFavorite
-      }))
-    );
+    useDogStore();
 
   const {
     data: dogs,
-    isLoading,
+    isFetching,
     isError,
     error
   } = useQuery({
@@ -76,43 +88,41 @@ export default function FavoritesPage() {
     enabled: !!favorites
   });
 
-  if (isLoading) {
-    return <LoadingCircle text={'Loading...'} />;
-  }
-
-  if (isError) {
-    return <div>Error: {error?.message}</div>;
-  }
-
   return (
     <>
       <Container>
-        <Title>Favorites</Title>
+        <Title>Your new best friend is waiting for you.</Title>
         <Description>
           Review your favorite dogs and generate your perfect match below!
         </Description>
         {dogs && (
-          <h2>
-            {favorites.length} Favorite{favorites.length ? 's' : ''}
-          </h2>
+          <Count>
+            {favorites.length} Favorite{favorites.length === 1 ? '' : 's'}
+          </Count>
         )}
 
-        {dogs ? (
-          <DogGrid>
-            {dogs?.map((dog) => (
-              <DogCard
-                key={dog.id}
-                onClick={() => removeFavorite(dog.id)}
-                dog={dog}
-                isFavorite
-              />
-            ))}
-          </DogGrid>
+        {dogs?.length !== 0 ? (
+          isFetching ? (
+            <LoadingCircle text={'Loading...'} />
+          ) : isError ? (
+            <p>Error: {error?.message}</p>
+          ) : (
+            <DogGrid>
+              {dogs?.map((dog) => (
+                <DogCard
+                  key={dog.id}
+                  onClick={() => removeFavorite(dog.id)}
+                  dog={dog}
+                  isFavorite
+                />
+              ))}
+            </DogGrid>
+          )
         ) : (
-          <>
+          <Warning>
             <p>Oh No! You have no favorite dogs.</p>
-            <p>Head to the search page to choose from our furry friends.</p>
-          </>
+            <p>Visit the search page to choose from our furry friends.</p>
+          </Warning>
         )}
 
         <ButtonContainer>
@@ -120,7 +130,10 @@ export default function FavoritesPage() {
             <Button onClick={undoRemove}>Undo Remove</Button>
           ) : null}
           {favorites && (
-            <Button onClick={() => setOpenModal(true)} disabled={!dogs}>
+            <Button
+              onClick={() => setOpenModal(true)}
+              disabled={(dogs?.length ?? 0) < 1}
+            >
               Generate your perfect match!
             </Button>
           )}

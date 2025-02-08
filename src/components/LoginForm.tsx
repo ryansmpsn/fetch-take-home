@@ -77,21 +77,24 @@ export default function LoginForm() {
       <StyledLoginForm onSubmit={handleSubmit(onSubmit)}>
         <Input
           type="text"
-          placeholder="First name"
+          label="First name"
+          placeholder="John"
           {...register('firstName')}
           errors={errors?.firstName?.message}
         />
 
         <Input
           type="text"
-          placeholder="Last Name"
+          label="Last name"
+          placeholder="Doe"
           {...register('lastName')}
           errors={errors?.lastName?.message}
         />
 
         <Input
           type="email"
-          placeholder="Email"
+          label="Email"
+          placeholder="example@gmail.com"
           {...register('email')}
           errors={errors?.email?.message}
         />

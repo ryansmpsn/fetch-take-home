@@ -43,7 +43,7 @@ export const useDogStore = create<DogStore>()(
         })
     }),
     {
-      name: 'dog-store',
+      name: 'dog-storage',
       storage: createJSONStorage(() => localStorage)
     }
   )

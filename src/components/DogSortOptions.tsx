@@ -14,24 +14,17 @@ const Container = styled.div`
   gap: 0.5rem;
 `;
 
-const Header = styled.h3`
-  margin-bottom: 0px;
-`;
-
-const InputGroup = styled.div`
+const Row = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 0.5rem;
-  flex: 1;
-  margin: 0.25rem 0px;
 `;
-
-const Label = styled.label``;
 
 const ButtonGroup = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+  flex: 1;
 `;
 
 const SortButton = styled(Button)<{ active?: boolean }>`
@@ -64,9 +57,7 @@ export default function DogSortOptions({ onChange }: DogSortOptionsProps) {
 
   return (
     <Container>
-      <Header>Sorting</Header>
-      <InputGroup>
-        <Label>Sort By:</Label>
+      <Row>
         {isMounted && (
           <StyledSelect
             aria-label="Sort by"
@@ -86,9 +77,7 @@ export default function DogSortOptions({ onChange }: DogSortOptionsProps) {
             defaultValue={{ value: 'breed', label: 'Breed' }}
           />
         )}
-      </InputGroup>
-      <InputGroup>
-        <Label>Sort Direction:</Label>
+
         <ButtonGroup>
           <SortButton
             active={sortOption.order === 'asc'}
@@ -113,7 +102,7 @@ export default function DogSortOptions({ onChange }: DogSortOptionsProps) {
             <span>Desc ↓</span>
           </SortButton>
         </ButtonGroup>
-      </InputGroup>
+      </Row>
     </Container>
   );
 }

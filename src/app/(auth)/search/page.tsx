@@ -7,7 +7,6 @@ import DogSortOptions from '@/components/DogSortOptions';
 import SearchResultsList from '@/components/SearchResultsList';
 import styled from 'styled-components';
 import { useDogStore } from '@/store/DogStore';
-import { useShallow } from 'zustand/shallow';
 import { MAX_FAVORITES } from '@/lib/constants';
 
 const Container = styled.div`
@@ -16,26 +15,36 @@ const Container = styled.div`
   padding: 0px 1rem;
 `;
 
-const Title = styled.h1``;
+const Title = styled.h1`
+  font-weight: 700;
+  font-size: 70px;
+  color: ${({ theme }) => theme.colors.primary};
+  max-width: 420px;
+`;
 
 const Description = styled.h3`
-  margin: 0px;
+  margin: 0px 0px 2rem;
   max-width: 37.5rem;
 `;
 
 const Count = styled.h4`
-  margin: 0px;
+  margin: 0px 0px 0.25rem;
+`;
+
+const FilterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: min-content;
+  box-shadow: 4px 4px 10px 0px rgba(158, 158, 158, 0.25);
+  border-radius: 0.5rem;
+  gap: 0.5rem;
+  padding: 1.25rem;
 `;
 
 const SearchContainer = styled.div`
-  display: grid;
-  grid-template-columns: 400px 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 2rem;
-
-  @media ${({ theme: { device } }) => device.laptopL} {
-    display: flex;
-    flex-direction: column;
-  }
 `;
 
 const SearchResults = styled.div``;
@@ -55,22 +64,18 @@ export default function SearchPage() {
     order: 'asc'
   });
 
-  const { favorites } = useDogStore(
-    useShallow((state) => ({
-      favorites: state.favorites
-    }))
-  );
+  const { favorites } = useDogStore();
 
   return (
     <Container>
-      <Title>Search</Title>
+      <Title>Meet our buddies.</Title>
       <Description>
         Select {MAX_FAVORITES} dogs to match with. You can filter by breed, age,
         and city. Then go to the Favorites page to generate your match.
       </Description>
 
       <SearchContainer>
-        <div>
+        <FilterContainer>
           <DogSearchFilters
             onChange={(newFilters: DogFilters) => {
               setFilters({
@@ -90,9 +95,8 @@ export default function SearchPage() {
               })
             }
           />
-        </div>
+        </FilterContainer>
         <SearchResults>
-          <h2>Search Results</h2>
           <Count>
             {favorites.length} / {MAX_FAVORITES} selected
           </Count>

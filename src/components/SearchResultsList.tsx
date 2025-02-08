@@ -4,7 +4,6 @@ import { getDogIDs, getDogs } from '@/api/routes';
 import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useShallow } from 'zustand/shallow';
 import Pagination from './Pagination';
 import { MAX_FAVORITES, PAGESIZE } from '@/lib/constants';
 import { DogFilters, DogSortOption } from '@/types';
@@ -15,7 +14,7 @@ import { LoadingCircle } from './LoadingCircle';
 const DogGrid = styled.div`
   display: grid;
   grid-auto-flow: row;
-  grid-template-columns: repeat(auto-fill, minmax(18.75rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
   gap: 1.25rem;
 `;
 
@@ -34,13 +33,7 @@ export default function SearchResultsList({
 }: SearchResultsListProps) {
   const { push } = useRouter();
 
-  const { favorites, addFavorite, removeFavorite } = useDogStore(
-    useShallow((state) => ({
-      favorites: state.favorites,
-      addFavorite: state.addFavorite,
-      removeFavorite: state.removeFavorite
-    }))
-  );
+  const { favorites, addFavorite, removeFavorite } = useDogStore();
 
   const {
     data: dogIds,
@@ -111,7 +104,7 @@ export default function SearchResultsList({
             dog={dog}
             onClick={() => handleDogClick(dog.id)}
             isFavorite={favorites.includes(dog.id)}
-            disabled={favorites.length === MAX_FAVORITES}
+            isMatch={favorites.length === MAX_FAVORITES}
           />
         ))}
       </DogGrid>

@@ -8,7 +8,6 @@ import styled from 'styled-components';
 import Image from 'next/image';
 import { getDogMatch, getDogs } from '@/api/routes';
 import { useDogStore } from '@/store/DogStore';
-import { useShallow } from 'zustand/shallow';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import DogCard from './DogCard';
@@ -47,6 +46,7 @@ const CloseButton = styled.button`
   border: none;
   border-radius: 4px;
   transition: opacity 0.25s;
+  background-color: transparent;
 
   &:hover,
   &:focus {
@@ -59,6 +59,14 @@ const CloseIcon = styled(Image)`
   height: auto;
   cursor: pointer;
   object-fit: contain;
+`;
+
+const Title = styled.h1`
+  font-weight: 700;
+  font-size: 60px;
+  color: ${({ theme }) => theme.colors.primary};
+  max-width: 420px;
+  margin-top: 0px;
 `;
 
 export type ModalType = {
@@ -75,11 +83,7 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
 
   const mainContainer = document.querySelector('#main');
 
-  const { favorites } = useDogStore(
-    useShallow((state) => ({
-      favorites: state.favorites
-    }))
-  );
+  const { favorites } = useDogStore();
 
   const {
     data: dogMatchId,
@@ -144,10 +148,12 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
               Error: {matchIdError?.message} {matchError?.message}
             </div>
           ) : (
-            <div>
-              <h1>Your Perfect Match</h1>
-              {dogMatch && <DogCard dog={dogMatch[0]} disabled />}
-            </div>
+            dogMatch && (
+              <div>
+                <Title>Meet {dogMatch[0].name}!</Title>
+                <DogCard dog={dogMatch[0]} isMatch />
+              </div>
+            )
           )}
         </Container>
       </Backdrop>,

@@ -10,6 +10,7 @@ export function StyledSelect<
     <Select
       {...props}
       styles={{
+        container: (provided) => ({ ...provided, flex: 1 }),
         valueContainer: (provided) => ({
           ...provided,
           display: 'flex',
@@ -20,15 +21,30 @@ export function StyledSelect<
 
         control: (provided) => ({
           ...provided,
-          padding: '5px',
+          padding: '0.0625rem',
           display: 'grid',
           gridTemplateColumns: '1fr auto'
         }),
         multiValue: (provided) => ({
           ...provided,
           minWidth: 'auto'
-        })
+        }),
+        singleValue: (provided) => ({
+          ...provided,
+          fontSize: '0.875rem'
+        }),
+        placeholder: (provided) => ({ ...provided, fontSize: '0.875rem' })
       }}
+      theme={(theme) => ({
+        ...theme,
+        borderRadius: 8,
+        colors: {
+          ...theme.colors,
+          primary25: '#FFF3D9',
+          primary: '#FF8845',
+          neutral20: '#DEE2E6'
+        }
+      })}
     />
   );
 }
