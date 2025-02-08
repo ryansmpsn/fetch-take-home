@@ -13,18 +13,23 @@ const Card = styled.div<{ $isMatch?: boolean }>`
   width: 100%;
   margin-inline: auto;
 
-  ${({ $isMatch }) =>
-    $isMatch &&
-    css`
-      max-width: none;
-      flex-direction: row;
-      box-shadow: none;
-      border-radius: none;
-    `}
-
   @media ${({ theme }) => theme.device.tablet} {
     max-width: 11.25rem;
   }
+
+  ${({ $isMatch, theme }) =>
+    $isMatch &&
+    css`
+      max-width: none !important;
+      flex-direction: row;
+      box-shadow: none;
+      border-radius: none;
+
+      @media ${theme.device.tablet} {
+        flex-direction: column;
+        align-items: center;
+      }
+    `}
 `;
 
 const StyledImage = styled(Image)<{ $isMatch?: boolean }>`

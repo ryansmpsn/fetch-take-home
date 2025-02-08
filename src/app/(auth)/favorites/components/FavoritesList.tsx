@@ -48,7 +48,11 @@ const DogGrid = styled.div`
   }
 `;
 
-export default function FavoritesList() {
+interface FavoritesListProps {
+  openModal: () => void;
+}
+
+export default function FavoritesList({ openModal }: FavoritesListProps) {
   const { favorites, removedFavorites, undoRemove, removeFavorite } =
     useDogStore();
   const { push } = useRouter();
@@ -108,10 +112,7 @@ export default function FavoritesList() {
           <Button onClick={undoRemove}>Undo Remove</Button>
         ) : null}
         {favorites && (
-          <Button
-            onClick={() => setOpenModal(true)}
-            disabled={(dogs?.length ?? 0) < 1}
-          >
+          <Button onClick={openModal} disabled={(dogs?.length ?? 0) < 1}>
             Generate your perfect match!
           </Button>
         )}

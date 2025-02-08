@@ -35,7 +35,7 @@ export default function FavoritesPage() {
         <Description>
           Review your favorite dogs and generate your perfect match below!
         </Description>
-        <FavoritesList />
+        <FavoritesList openModal={() => setOpenModal(true)} />
       </Container>
       {openModal && <MatchModal setClose={() => setOpenModal(false)} />}
     </>
