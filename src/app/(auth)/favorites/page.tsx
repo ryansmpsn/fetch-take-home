@@ -39,9 +39,13 @@ const Warning = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  margin: 2rem auto;
+
+  text-align: center;
   gap: 1rem;
-  margin: 2rem 0px;
   font-size: 1.25rem;
+  max-width: 18.75rem;
   color: ${({ theme }) => theme.colors.primary};
 `;
 
@@ -59,6 +63,10 @@ const DogGrid = styled.div`
   grid-auto-flow: row;
   grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
   gap: 1.25rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
 `;
 
 export default function FavoritesPage() {

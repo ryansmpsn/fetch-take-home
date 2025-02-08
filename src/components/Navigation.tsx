@@ -204,10 +204,10 @@ export default function Navigation() {
 
       <MobileNav $open={navOpen}>
         <MobileNavItems>
-          <MobileNavItem>
+          <MobileNavItem onClick={() => setNavOpen(!navOpen)}>
             <NavText href="/search">Search</NavText>
           </MobileNavItem>
-          <MobileNavItem>
+          <MobileNavItem onClick={() => setNavOpen(!navOpen)}>
             <NavText href="/favorites">Favorites</NavText>
           </MobileNavItem>
         </MobileNavItems>

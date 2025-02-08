@@ -16,6 +16,10 @@ const DogGrid = styled.div`
   grid-auto-flow: row;
   grid-template-columns: repeat(auto-fill, minmax(15.625rem, 1fr));
   gap: 1.25rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    grid-template-columns: repeat(auto-fill, minmax(10rem, 1fr));
+  }
 `;
 
 type SearchResultsListProps = {

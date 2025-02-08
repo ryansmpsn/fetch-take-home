@@ -21,6 +21,10 @@ const Card = styled.div<{ $isMatch?: boolean }>`
       box-shadow: none;
       border-radius: none;
     `}
+
+  @media ${({ theme }) => theme.device.tablet} {
+    max-width: 11.25rem;
+  }
 `;
 
 const StyledImage = styled(Image)<{ $isMatch?: boolean }>`
@@ -34,6 +38,11 @@ const StyledImage = styled(Image)<{ $isMatch?: boolean }>`
     css`
       border-radius: 12px;
     `}
+
+  @media ${({ theme }) => theme.device.tablet} {
+    width: 12.5rem;
+    height: 11.25rem;
+  }
 `;
 
 const Details = styled.div`
@@ -90,10 +99,7 @@ const FavoriteButton = styled.button<{ $isFavorite?: boolean }>`
   width: 1.625rem;
   border: none;
   border-radius: 4px;
-  transition:
-    opacity 0.25s,
-    background-color 0.25s,
-    filter 0.25s;
+  transition: opacity 0.25s, background-color 0.25s, filter 0.25s;
 
   ${({ theme: { colors }, $isFavorite }) => css`
     ${$isFavorite
