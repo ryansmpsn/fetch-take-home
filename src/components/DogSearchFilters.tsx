@@ -96,11 +96,14 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
   });
 
   useEffect(() => {
-    const uniqueZipCodes = city
-      ? Array.from(
-          new Set(locations?.results.map((location) => location.zip_code))
-        )
-      : undefined;
+    if (isLoadingLocations) return;
+
+    const uniqueZipCodes =
+      city && locations?.results.length
+        ? [...new Set(locations.results.map(({ zip_code }) => zip_code))]
+        : undefined;
+
+    const zipCodes = uniqueZipCodes?.length === 0 ? ['1'] : uniqueZipCodes;
 
     onChange({
       breeds: debouncedFilteredBreeds?.length
@@ -108,14 +111,16 @@ export default function DogSearchFilters({ onChange }: DogSearchFiltersProps) {
         : undefined,
       ageMin: debouncedAgeMin,
       ageMax: debouncedAgeMax,
-      zipCodes: uniqueZipCodes ? uniqueZipCodes : undefined
+      zipCodes
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     debouncedFilteredBreeds,
     debouncedAgeMin,
     debouncedAgeMax,
-    debouncedCity
+    debouncedCity,
+    locations,
+    isLoadingLocations
   ]);
 
   const handleBreedChange = (
