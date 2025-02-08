@@ -32,7 +32,6 @@ const colors = {
   tertiary: '#FFF3EC',
   text: '#000',
   textgray: '#46311F',
-  warning: '#dc3545',
   white: '#fff'
 };
 

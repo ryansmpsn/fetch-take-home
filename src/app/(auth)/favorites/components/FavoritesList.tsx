@@ -9,6 +9,7 @@ import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import styled from 'styled-components';
 import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 
 const Count = styled.h4`
   margin: 0px 0px 0.25rem;
@@ -20,12 +21,21 @@ const Warning = styled.div`
   align-items: center;
   justify-content: center;
   margin: 2rem auto;
-
   text-align: center;
   gap: 1rem;
   font-size: 1.25rem;
   max-width: 18.75rem;
   color: ${({ theme }) => theme.colors.primary};
+
+  a {
+    color: ${({ theme: { colors } }) => colors.primary};
+    transition: color 0.25s;
+
+    &:hover,
+    &:focus {
+      color: ${({ theme: { colors } }) => colors.secondary};
+    }
+  }
 `;
 
 const ButtonContainer = styled.div`
@@ -103,7 +113,10 @@ export default function FavoritesList({ openModal }: FavoritesListProps) {
       ) : (
         <Warning>
           <p>Oh No! You have no favorite dogs.</p>
-          <p>Visit the search page to choose from our furry friends.</p>
+          <p>
+            Visit the <Link href={'/search'}>search</Link> page to choose from
+            our furry friends.
+          </p>
         </Warning>
       )}
 
