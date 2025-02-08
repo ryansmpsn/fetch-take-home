@@ -1,4 +1,4 @@
-export const PAGESIZE = 12;
+export const PAGESIZE = 18;
 export const MAX_FAVORITES = 10; // Api limit of 100
 export const STATES = [
   { name: 'Alabama', abbreviation: 'AL' },
