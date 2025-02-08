@@ -33,7 +33,7 @@ export default function FavoritesPage() {
       <Container>
         <Title>Your new best friend is waiting for you.</Title>
         <Description>
-          Review your favorite dogs and generate your perfect match below!
+          Review your favorite pups and find your perfect match below! 🐶💕
         </Description>
         <FavoritesList openModal={() => setOpenModal(true)} />
       </Container>

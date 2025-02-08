@@ -83,7 +83,7 @@ export default function SearchPage() {
       <Description>
         Select {MAX_FAVORITES} dogs to match with. You can filter by breed, age,
         and city. Then visit the <Link href={'/favorites'}>favorites</Link> page
-        to generate your match.
+        to find your match.
       </Description>
 
       <SearchContainer>

@@ -113,7 +113,7 @@ export default function FavoritesList({ openModal }: FavoritesListProps) {
         ) : null}
         {favorites && (
           <Button onClick={openModal} disabled={(dogs?.length ?? 0) < 1}>
-            Generate your perfect match!
+            Find your perfect match!
           </Button>
         )}
       </ButtonContainer>

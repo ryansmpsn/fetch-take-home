@@ -55,6 +55,10 @@ const Details = styled.div`
   display: flex;
   flex-direction: column;
   padding: 1rem 1rem 1rem 2rem;
+
+  @media ${({ theme }) => theme.device.tablet} {
+    padding: 1rem;
+  }
 `;
 
 const Name = styled.p`
