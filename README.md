@@ -37,7 +37,7 @@ Now, you’re ready to start developing! 🚀🔥
 
 ## Known issues
 
-### Login issue on Safari: Authentication may not work properly due to Safari’s Prevent Cross-Site Tracking feature. To resolve this:
+### Login issue: Authentication may not work properly due to your browser’s cross-site tracking prevention feature. To resolve this:
 
-- Disable Prevent Cross-Site Tracking in Safari settings.
+- Disable the cross-site tracking prevention setting in your browser.
 - Alternatively, ensure the frontend and backend are hosted on the same domain.
