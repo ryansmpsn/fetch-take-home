@@ -1,3 +1,4 @@
+import { defaultTheme } from '@/styles/Theme';
 import React from 'react';
 import Select, { GroupBase, Props } from 'react-select';
 
@@ -40,9 +41,9 @@ export function StyledSelect<
         borderRadius: 8,
         colors: {
           ...theme.colors,
-          primary25: '#FFF3D9',
-          primary: '#FF8845',
-          neutral20: '#DEE2E6'
+          primary25: defaultTheme.colors.quaternary,
+          primary: defaultTheme.colors.primary,
+          neutral20: defaultTheme.colors.lightborder
         }
       })}
     />

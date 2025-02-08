@@ -2,9 +2,9 @@
 
 import { DogFilters, DogSortOption } from '@/types';
 import { useState } from 'react';
-import DogSearchFilters from '@/components/DogSearchFilters';
-import DogSortOptions from '@/components/DogSortOptions';
-import SearchResultsList from '@/components/SearchResultsList';
+import DogSearchFilters from '@/app/(auth)/search/components/DogSearchFilters';
+import DogSortOptions from '@/app/(auth)/search/components/DogSortOptions';
+import SearchResultsList from '@/app/(auth)/search/components/SearchResultsList';
 import styled from 'styled-components';
 import { useDogStore } from '@/store/DogStore';
 import { MAX_FAVORITES } from '@/lib/constants';

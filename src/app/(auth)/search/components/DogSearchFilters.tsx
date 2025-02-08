@@ -10,9 +10,9 @@ import useDebounce from '@/hooks/useDebounce';
 import { SearchLocations } from '@/api/routes';
 import { STATES } from '@/lib/constants';
 import useIsMounted from '@/hooks/useIsMounted';
-import { Input } from './Input';
+import { Input } from '../../../../components/Input';
 import styled from 'styled-components';
-import { StyledSelect } from './StyledSelect';
+import { StyledSelect } from '../../../../components/StyledSelect';
 
 const Container = styled.div`
   display: flex;

@@ -5,8 +5,8 @@ import { useEffect, useState } from 'react';
 import useDebounce from '@/hooks/useDebounce';
 import useIsMounted from '@/hooks/useIsMounted';
 import styled, { css } from 'styled-components';
-import { StyledSelect } from './StyledSelect';
-import Button from './Button';
+import { StyledSelect } from '../../../../components/StyledSelect';
+import Button from '../../../../components/Button';
 
 const Container = styled.div`
   display: flex;

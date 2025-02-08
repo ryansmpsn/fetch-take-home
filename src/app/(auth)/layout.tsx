@@ -1,4 +1,4 @@
-import Navigation from '@/components/Navigation';
+import Navigation from '@/app/(auth)/components/Navigation';
 
 export default function AuthLayout({
   children

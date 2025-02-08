@@ -10,8 +10,8 @@ import { getDogMatch, getDogs } from '@/api/routes';
 import { useDogStore } from '@/store/DogStore';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import DogCard from './DogCard';
-import { LoadingCircle } from './LoadingCircle';
+import DogCard from '../../components/DogCard';
+import { LoadingCircle } from '../../../../components/LoadingCircle';
 
 const Backdrop = styled.div`
   position: fixed;
@@ -30,8 +30,8 @@ const Container = styled.dialog`
   position: relative;
   padding: 2rem;
   border-radius: 8px;
-  color: black;
-  background: white;
+  color: ${({ theme }) => theme.colors.black};
+  background: ${({ theme }) => theme.colors.white};
   border: none;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.1);
 `;

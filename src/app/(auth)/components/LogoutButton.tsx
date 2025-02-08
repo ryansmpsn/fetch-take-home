@@ -2,7 +2,7 @@
 import { logout } from '@/api/routes';
 import { useMutation } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import Button from './Button';
+import Button from '../../../components/Button';
 
 export default function LogoutButton() {
   const { push } = useRouter();

@@ -7,9 +7,9 @@ import { useRouter } from 'next/navigation';
 import Pagination from './Pagination';
 import { MAX_FAVORITES, PAGESIZE } from '@/lib/constants';
 import { DogFilters, DogSortOption } from '@/types';
-import DogCard from './DogCard';
+import DogCard from '../../components/DogCard';
 import styled from 'styled-components';
-import { LoadingCircle } from './LoadingCircle';
+import { LoadingCircle } from '../../../../components/LoadingCircle';
 
 const DogGrid = styled.div`
   display: grid;

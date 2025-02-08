@@ -7,9 +7,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FormProvider, useForm } from 'react-hook-form';
 import { useMutation } from '@tanstack/react-query';
 import { LoginFormBody } from '@/types';
-import Button from './Button';
+import Button from '../../components/Button';
 import styled from 'styled-components';
-import { Input } from './Input';
+import { Input } from '../../components/Input';
 
 const StyledLoginForm = styled.form`
   display: flex;
