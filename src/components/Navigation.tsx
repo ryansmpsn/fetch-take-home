@@ -59,11 +59,11 @@ const NavText = styled(Link)`
     color: ${({ theme }) => theme.colors.secondary};
   }
 `;
-
-const DesktopOnly = styled.div`
-  @media ${({ theme }) => theme.device.tablet} {
-    display: none;
-  }
+const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  align-items: center;
 `;
 
 const HamburgerButton = styled.button<{ $open?: boolean }>`
@@ -79,9 +79,9 @@ const HamburgerButton = styled.button<{ $open?: boolean }>`
   span {
     display: block;
     position: absolute;
-    height: 1px;
+    height: 3px;
     width: 100%;
-    background: #fff;
+    background: ${({ theme }) => theme.colors.primary};
     border-radius: 9px;
     opacity: 1;
     left: 0;
@@ -191,37 +191,24 @@ export default function Navigation() {
             <NavText href="/favorites">Favorites</NavText>
           </NavItem>
         </NavItems>
-
-        <DesktopOnly>
+        <ButtonContainer>
           <LogoutButton />
-        </DesktopOnly>
-        <HamburgerButton $open={navOpen} onClick={() => setNavOpen(!navOpen)}>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </HamburgerButton>
+          <HamburgerButton $open={navOpen} onClick={() => setNavOpen(!navOpen)}>
+            <span></span>
+            <span></span>
+            <span></span>
+            <span></span>
+          </HamburgerButton>
+        </ButtonContainer>
       </MainNav>
 
       <MobileNav $open={navOpen}>
         <MobileNavItems>
           <MobileNavItem>
-            <NavText href="#about" onClick={() => setNavOpen(!navOpen)}>
-              About Me
-            </NavText>
+            <NavText href="/search">Search</NavText>
           </MobileNavItem>
           <MobileNavItem>
-            <NavText href="#projects" onClick={() => setNavOpen(!navOpen)}>
-              Projects
-            </NavText>
-          </MobileNavItem>
-          <MobileNavItem>
-            <NavText href="#technology" onClick={() => setNavOpen(!navOpen)}>
-              Technology
-            </NavText>
-          </MobileNavItem>
-          <MobileNavItem>
-            <LogoutButton />
+            <NavText href="/favorites">Favorites</NavText>
           </MobileNavItem>
         </MobileNavItems>
       </MobileNav>

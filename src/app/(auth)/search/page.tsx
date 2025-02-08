@@ -8,6 +8,7 @@ import SearchResultsList from '@/components/SearchResultsList';
 import styled from 'styled-components';
 import { useDogStore } from '@/store/DogStore';
 import { MAX_FAVORITES } from '@/lib/constants';
+import Link from 'next/link';
 
 const Container = styled.div`
   display: flex;
@@ -25,6 +26,16 @@ const Title = styled.h1`
 const Description = styled.h3`
   margin: 0px 0px 2rem;
   max-width: 37.5rem;
+
+  a {
+    color: ${({ theme: { colors } }) => colors.primary};
+    transition: color 0.25s;
+
+    &:hover,
+    &:focus {
+      color: ${({ theme: { colors } }) => colors.secondary};
+    }
+  }
 `;
 
 const Count = styled.h4`
@@ -71,7 +82,8 @@ export default function SearchPage() {
       <Title>Meet our buddies.</Title>
       <Description>
         Select {MAX_FAVORITES} dogs to match with. You can filter by breed, age,
-        and city. Then go to the Favorites page to generate your match.
+        and city. Then visit the <Link href={'/favorites'}>favorites</Link> page
+        to generate your match.
       </Description>
 
       <SearchContainer>

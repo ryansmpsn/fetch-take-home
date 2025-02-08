@@ -18,6 +18,10 @@ const Row = styled.div`
   display: flex;
   flex-direction: row;
   gap: 0.5rem;
+
+  @media ${({ theme: { device } }) => device.mobileL} {
+    flex-direction: column;
+  }
 `;
 
 const ButtonGroup = styled.div`
