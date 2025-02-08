@@ -34,3 +34,10 @@ bun dev
 🔗 [http://localhost:3000](http://localhost:3000)
 
 Now, you’re ready to start developing! 🚀🔥
+
+## Known issues
+
+### Login issue on Safari: Authentication may not work properly due to Safari’s Prevent Cross-Site Tracking feature. To resolve this:
+
+- Disable Prevent Cross-Site Tracking in Safari settings.
+- Alternatively, ensure the frontend and backend are hosted on the same domain.
