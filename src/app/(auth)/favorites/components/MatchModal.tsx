@@ -63,10 +63,10 @@ const CloseIcon = styled(Image)`
 
 const Title = styled.h1`
   font-weight: 700;
-  font-size: 60px;
+  font-size: 3.125rem;
   color: ${({ theme }) => theme.colors.primary};
-  max-width: 420px;
-  margin-top: 0px;
+  max-width: 26.25rem;
+  margin: 0px;
 `;
 
 export type ModalType = {
@@ -150,7 +150,10 @@ function MatchModal({ setClose, ...props }: PropsWithChildren<ModalType>) {
           ) : (
             dogMatch && (
               <div>
-                <Title>Meet {dogMatch[0].name}!</Title>
+                <Title>
+                  🎉 You&apos;ve found your perfect pup! Meet {dogMatch[0].name}
+                  !
+                </Title>
                 <DogCard dog={dogMatch[0]} isMatch />
               </div>
             )

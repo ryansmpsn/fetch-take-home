@@ -33,7 +33,7 @@ const AgeRow = styled.div`
 
 const LocationRow = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1;
   gap: 0.5rem;
 
